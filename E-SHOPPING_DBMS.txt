@@ -1,0 +1,187 @@
+create table Customer(Cust_id integer NOT NULL, 
+Name varchar(50), 
+Contact char(11), 
+Address varchar(50),
+PRIMARY KEY(Cust_id));
+insert into Customer values(1,'Aryan karkra',9871777857,'gurugram')
+insert into Customer values(2,'ishita',9871633227,'pitampura')
+insert into Customer values(3,'mehak garg',9575523857,'vaishali')
+insert into Customer values(4,'raavi singh',9800525257,'Kanhaiya nagar')
+insert into Customer values(5,'gaurav garg',8871752527,'Rohtak')
+insert into Customer values(6,'mayank',9972525267,'saket')
+insert into Customer values(7,'japkirat singh',9185785195,'chattarpur')
+insert into Customer values(8,'piyush kumar',9572285025,'chandi chowk')
+insert into Customer values(9,'rajkumar chauhan',8499952892,'Noida')
+insert into Customer values(10,'prashant tiwari',9992588529,'Panipat')
+
+
+select * from Customer
+create table Shopping_Order(Order_id int,
+Customer_id int,
+Date_of_order DATE,
+PRIMARY KEY(Order_id),
+FOREIGN KEY(Customer_id) REFERENCES Customer(Cust_id) );
+
+insert into Shopping_Order values(1001,1,'03-Jan-2022')
+insert into Shopping_Order values(1002,2,'15-Jan-2022')
+insert into Shopping_Order values(1003,4,'04-Feb-2022')
+insert into Shopping_Order values(1004,5,'21-Feb-2022')
+insert into Shopping_Order values(1005,8,'27-Feb-2022')
+insert into Shopping_Order values(1006,10,'05-March-2022')
+select * from shopping_order;
+
+drop table Shopping_Order
+
+create table Categories(Cat_id int NOT NULL, 
+Cat_name varchar(50), 
+Cat_type varchar(50),
+PRIMARY KEY(Cat_id));
+insert into Categories values(100, 'ABC', 'XYZ') ;
+delete from Categories where Cat_id=100 ;
+select * from Categories ;
+alter table Categories drop column Cat_type ;
+
+insert into Categories values (101,'apparels')
+insert into Categories values (102,	'electronics')
+insert into Categories values (103,     'footwear')
+insert into Categories values (104,	'jewellary')
+insert into Categories values (105,	'fashion accessories' )
+insert into Categories values (106,	'cosmetics ')
+insert into Categories values (107,	'home décor ')
+insert into Categories values (108,	'books')
+
+select * from categories ;
+
+create table Delivery(delivery_id integer NOT NULL,
+Cust_id integer NOT NULL,
+Date_of_delivery DATE,
+PRIMARY KEY(delivery_id),
+FOREIGN KEY(Cust_id) REFERENCES Customer(Cust_id) );
+insert into Delivery values(201,1,	'10-Jan-2022');
+insert into Delivery values(202,2,	'19-Jan-2022');
+insert into Delivery values(203,4,	'09-Feb-2022');
+insert into Delivery values(204,5,	'25-Feb-2022');
+insert into Delivery values(205,8,	'06-March-2022');
+select *from Delivery
+
+
+create table Products(P_id integer NOT NULL,
+P_name varchar(50),
+category_id integer NOT NULL,
+PRIMARY KEY(P_id),
+FOREIGN KEY(category_id) REFERENCES Categories(Cat_id) );
+
+insert into Products values(301,'lewis jeans',101)
+insert into Products values(302,'Monte carlo Tshirts',101)
+insert into Products values(303,'apple',102)
+insert into Products values(304,'samsung',102)
+insert into Products values(305,'bata',103)
+insert into Products values(306,'nike',103)
+insert into Products values(307,'tanishq',104)
+insert into Products values(308,'gucci',105)
+insert into Products values(309,'lakme',106)
+insert into Products values(310,'himalaya',106)
+insert into Products values(311,'Gulmohar lane',107)
+insert into Products values(312,'penguin',108)
+select * from Products;
+
+alter table Products
+add (price varchar(100),number_of_products int)
+insert into Products values(301,'lewis jeans',101,'10000',25)
+insert into Products values(302,'Monte carlo Tshirts',101,20000,35)
+insert into Products values(303,'apple',102,15000,60)
+insert into Products values(304,'samsung',102,5000,70)
+insert into Products values(305,'bata',103,80000,10)
+insert into Products values(306,'nike',103,45000,100)
+insert into Products values(307,'tanishq',104,100000,80)
+insert into Products values(308,'gucci',105,200000,10)
+insert into Products values(309,'lakme',106,12000,30)
+insert into Products values(310,'himalaya',106,1000,5)
+insert into Products values(311,'Gulmohar lane',107,500,40)
+insert into Products values(312,'penguin',108,70000,40)
+
+alter table Products
+add (price varchar(100) 
+
+alter table Products drop column price 
+alter table Products drop column number_of_products
+create table Seller(Seller_id integer NOT NULL,
+s_namevarchar(50),
+product_id integer NOT NULL,
+PRIMARY KEY(Seller_id),
+FOREIGN KEY(product_id) REFERENCES Products(P_id) );
+
+create table Payment(Pay_id integer NOT NULL,
+date_of_payment DATE,
+customer_id integer NOT NULL,
+PRIMARY KEY(Pay_id),
+FOREIGN KEY(customer_id) REFERENCES Customer(Cust_id) );
+
+insert into Payment values(501,'03-Jan-2022',1)
+
+insert into Payment values(502,'15-Jan-2022',2)
+
+insert into Payment values(503,'04-Feb-2022',4)
+
+insert into Payment values(504,'21-Feb-2022',5)
+
+insert into Payment values(505,'27-Feb-2022',8)
+
+insert into Payment values(506,'05-March-2022',10)
+
+select * from Payment;
+
+
+
+
+create table Transaction_details(report_id integer NOT NULL,
+customer_id integer NOT NULL,
+order_id integer NOT NULL,
+product_id integer NOT NULL,
+payment_id integer NOT NULL,
+PRIMARY KEY(report_id),
+FOREIGN KEY(customer_id) REFERENCES Customer(Cust_id),
+FOREIGN KEY(order_id) REFERENCES Shopping_order(order_id),
+FOREIGN KEY(product_id) REFERENCES Products(P_id),
+FOREIGN KEY(product_id) REFERENCES Products(P_id) );
+
+insert into Transaction_details values(801,1,1001,301,501)
+insert into Transaction_details values(802,2,1002,308,502)
+insert into Transaction_details values(803,4,1003,310,503)
+insert into Transaction_details values(804,5,1004,303,504)
+insert into Transaction_details values(805,8,1005,306,505)
+insert into Transaction_details values(806,10,1006,312,506)
+
+select* from Transaction_details
+
+alter table Products
+add (price varchar(100),number_of_products int)
+
+update Products set price='10000', number_of_products=25 where P_id=301;
+update Products set price='20000', number_of_products=35 where P_id=302;
+update Products set price='15000', number_of_products=60 where P_id=303;
+update Products set price='5000', number_of_products=70 where P_id=304;
+update Products set price='80000', number_of_products=10 where P_id=305;
+update Products set price='45000', number_of_products=100 where P_id=306;
+update Products set price='100000', number_of_products=80 where P_id=307;
+update Products set price='200000', number_of_products=10 where P_id=308;
+update Products set price='12000', number_of_products=30 where P_id=309;
+update Products set price='1000', number_of_products=30 where P_id=310;
+update Products set price='500', number_of_products=40 where P_id=311;
+update Products set price='70000', number_of_products=40 where P_id=312;
+
+alter table delivery add(country varchar(20))
+update delivery set country='India' where delivery_id= 201;
+update delivery set country='Spain' where delivery_id= 202;
+update delivery set country='India' where delivery_id= 203;
+update delivery set country='US' where delivery_id= 204;
+update delivery set country='US' where delivery_id= 205;
+
+alter table payment add(pay_type varchar(20))
+update payment set pay_type='cash' where payment_id=501;
+update payment set pay_type='non-cash' where payment_id=502;
+update payment set pay_type='cash' where payment_id=503;
+update payment set pay_type='non-cash' where payment_id=504;
+update payment set pay_type='cash' where payment_id=505;
+update payment set pay_type='non-cash' where payment_id=506;
+
